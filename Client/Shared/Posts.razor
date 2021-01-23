@@ -1,28 +1,33 @@
 ﻿@using BlazorBlog.Shared
 @inject BlazorBlog.Client.Services.IPostService PostService
 
-<h3>Posts</h3>
-
-@foreach (var post in BlogPosts)
+@if (_posts.Count == 0)
 {
-<div style="margin: 20px;">
-    <div>
-        <h3>@post.Title</h3>
-    </div>
-    <div>
-        <h5>@post.Description</h5>
-    </div>
-    <div>
-        <a href="/posts/@post.Url">Read More...</a>
-    </div>
-</div>
+    <p>Getting posts...</p>
+}
+else
+{
+    @foreach (var post in _posts)
+    {
+        <div style="margin: 20px;">
+            <div>
+                <h3>@post.Title</h3>
+            </div>
+            <div>
+                <h5>@post.Description</h5>
+            </div>
+            <div>
+                <a href="/posts/@post.Url">Read More...</a>
+            </div>
+        </div>
+    }
 }
 
 @code {
-    private List<Post> BlogPosts = new List<Post>();
+    private List<Post> _posts = new List<Post>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        BlogPosts = PostService.GetPosts();
+        _posts = await PostService.GetAllPosts();
     }
 }

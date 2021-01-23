@@ -1,11 +1,18 @@
-﻿@page "/posts/{url}" 
+﻿@page "/posts/{url}"
 @inject BlazorBlog.Client.Services.IPostService PostService
 
-<h3>@post.Title</h3>
+@if (post == null)
+{
+    <p>Getting post...</p>
+}
+else
+{
+    <h3>@post.Title</h3>
 
-<div>
-    @post.Content
-</div>
+    <div>
+        @post.Content
+    </div>
+}
 
 @code {
     private BlazorBlog.Shared.Post post;
@@ -13,8 +20,8 @@
     [Parameter]
     public string Url { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        post = PostService.GetPostByUrl(Url);
+        post = await PostService.GetPostByUrl(Url);
     }
 }

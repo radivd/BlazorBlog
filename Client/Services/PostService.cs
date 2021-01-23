@@ -1,25 +1,29 @@
 ﻿using BlazorBlog.Shared;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace BlazorBlog.Client.Services
 {
     public class PostService : IPostService
     {
-        public List<Post> Posts { get; set; } = new List<Post>()
-        {
-            new Post { Url="first-post", Title = "Blazor Blog Post 1 test", Description="This is the first test post", Content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac sem et nulla tincidunt hendrerit ac a odio. Sed sed elementum nisi, vitae pretium leo. Aenean viverra arcu vel quam luctus egestas. Nunc rutrum pulvinar elementum. Proin neque odio, blandit quis molestie a, posuere sed elit. Sed eu quam in ligula semper volutpat. Fusce vel diam turpis. Suspendisse in sollicitudin arcu. Maecenas lobortis ligula sed leo finibus semper." },
-            new Post { Url="second-post", Title = "Pust number two test", Description="This is the second test post", Content="Etiam eget porta metus. Aenean ultrices vitae magna ut dictum. Sed congue ante quis viverra consequat. In eu turpis et ipsum porta bibendum a vel velit. Nam pharetra odio nec facilisis placerat. Suspendisse ac vestibulum tortor. Maecenas convallis mauris libero, in finibus arcu pharetra ac. Integer cursus sed eros quis suscipit. Mauris vitae consequat enim. Fusce volutpat erat vitae eros aliquet malesuada. Aliquam ac nibh tellus. Sed laoreet quam a dolor sodales, id ornare eros fermentum." }
-        };
+        private readonly HttpClient _http;
 
-        public Post GetPostByUrl(string url)
+        public PostService(HttpClient http)
         {
-            return Posts.FirstOrDefault(p => p.Url.ToLower().Equals(url.ToLower()));
+            _http = http;
         }
 
-        public List<Post> GetPosts()
+        public Task<Post> GetPostByUrl(string url)
         {
-            return Posts;
+            return _http.GetFromJsonAsync<Post>($"api/posts/{url}");
+        }
+
+        public Task<List<Post>> GetAllPosts()
+        {
+            return _http.GetFromJsonAsync<List<Post>>("api/posts/");
         }
     }
 }
