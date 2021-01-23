@@ -1,0 +1,99 @@
+﻿* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+app {
+    min-height: 100vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px auto 50px;
+    grid-template-areas: "title navbar" "main main" "footer footer";
+}
+
+.header a {
+    color: #34495e;
+    text-decoration: none;
+}
+
+.pagetitle {
+    font-weight: 900;
+    grid-area: title;
+    align-self: center;
+    justify-self: center;
+}
+
+.navbar {
+    grid-area: navbar;
+    align-self: end;
+    justify-self: end;
+    margin-right: 30px;
+}
+    .navbar ul {
+    }
+    .navbar li {
+        font-size: 25px;
+        font-weight: 700;
+        display: inline-block;
+        margin-right: 10px;
+        list-style: none;
+    }
+
+.main {
+    grid-area: main;
+    background-color: whitesmoke;
+    display: grid;
+    grid-template-columns: auto 1100px auto;
+    grid-template-areas:
+        ". content ."
+}
+
+.content {
+    grid-area: content;
+    background-color: cornsilk;
+    padding: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+@media (max-width: 767.98px) {
+
+}
+
+@media (min-width: 768px) {
+
+}
