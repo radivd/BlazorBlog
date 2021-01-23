@@ -18,6 +18,7 @@ namespace BlazorBlog.Server.Models
         }
 
         public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,58 +35,69 @@ namespace BlazorBlog.Server.Models
             {
                 entity.ToTable("posts");
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(254)")
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Author)
-                    .HasColumnType("int(20)")
-                    .HasColumnName("author");
+                entity.Property(e => e.Id).HasColumnType("int(254)");
 
                 entity.Property(e => e.Content)
                     .IsRequired()
                     .HasColumnType("longtext")
-                    .HasColumnName("content")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_general_ci");
 
                 entity.Property(e => e.Created)
                     .HasColumnType("datetime")
-                    .HasColumnName("created")
                     .HasDefaultValueSql("'0000-00-00 00:00:00'");
 
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnType("text")
-                    .HasColumnName("description")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_general_ci");
 
                 entity.Property(e => e.Edited)
                     .HasColumnType("datetime")
-                    .HasColumnName("edited")
                     .HasDefaultValueSql("'0000-00-00 00:00:00'");
-
-                entity.Property(e => e.Ispublished).HasColumnName("ispublished");
 
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnType("text")
-                    .HasColumnName("title")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_general_ci");
 
                 entity.Property(e => e.Url)
                     .IsRequired()
                     .HasColumnType("varchar(254)")
-                    .HasColumnName("url")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_general_ci");
 
-                entity.Property(e => e.Userid)
+                entity.Property(e => e.UserId)
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_general_ci");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("users");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_general_ci");
+
+                entity.Property(e => e.Api)
                     .IsRequired()
-                    .HasColumnType("varchar(254)")
-                    .HasColumnName("userid")
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_general_ci");
+
+                entity.Property(e => e.Author)
+                    .IsRequired()
+                    .HasColumnType("varchar(20)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_general_ci");
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasColumnType("varchar(255)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_general_ci");
             });
