@@ -6,19 +6,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BlazorBlog.Server.Models
 {
-    public partial class AMCDbContext : DbContext
+    public class AMCDbContext : DbContext
     {
-        public AMCDbContext()
+        public AMCDbContext(DbContextOptions options) : base(options)
         {
         }
-
-        public AMCDbContext(DbContextOptions<AMCDbContext> options)
-            : base(options)
-        {
-        }
-
-        public virtual DbSet<Post> Posts { get; set; }
-        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -92,10 +84,6 @@ namespace BlazorBlog.Server.Models
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_general_ci");
             });
-
-            OnModelCreatingPartial(modelBuilder);
         }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
