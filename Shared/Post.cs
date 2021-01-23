@@ -15,6 +15,5 @@ namespace BlazorBlog.Shared
         public DateTime TimeCreated { get; set; } = DateTime.Now;
         public DateTime TimeEdited { get; set; } = DateTime.Now;
         public bool IsPublished { get; set; } = true;
-        public bool IsDeleted { get; set; } = false;
     }
 }
