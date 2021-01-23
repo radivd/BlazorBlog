@@ -1,5 +1,7 @@
+using BudgetingServer.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +24,11 @@ namespace BlazorBlog.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureCors();
+            services.ConfigureIISIntegration();
+
+            services.ConfigureMySqlContext(Configuration);
+            services.ConfigureDataWrapper();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -43,8 +50,10 @@ namespace BlazorBlog.Server
             }
 
             app.UseHttpsRedirection();
-            app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
+            app.UseCors("CorsPolicy");
+            app.UseForwardedHeaders(new ForwardedHeadersOptions{ ForwardedHeaders = ForwardedHeaders.All });
+            app.UseBlazorFrameworkFiles();
 
             app.UseRouting();
 
