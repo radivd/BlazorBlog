@@ -46,7 +46,6 @@ app {
 
 .main {
     grid-area: main;
-    background-color: whitesmoke;
     display: grid;
     grid-template-columns: auto 1100px auto;
     grid-template-areas:
