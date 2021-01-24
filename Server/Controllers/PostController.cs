@@ -1,14 +1,25 @@
-﻿using BlazorBlog.Shared.Models;
+﻿using BlazorBlog.Server.Contracts;
+using BlazorBlog.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BlazorBlog.Server.Controllers
 {
-    [Route("api/posts")]
+    [Route("api/post")]
     [ApiController]
     public class PostController : ControllerBase
     {
+        private IDataWrapper _data;
+        private ILoggerManager _logger;
+
+        public PostController(IDataWrapper dataWrapper, ILoggerManager logger)
+        {
+            _data = dataWrapper;
+            _logger = logger;
+        }
+
         public List<Post> Posts { get; set; } = new List<Post>()
         {
             new Post { Url="first-post", Title = "Blazor Blog Post 1 test", Description="This is the first test post", Content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac sem et nulla tincidunt hendrerit ac a odio. Sed sed elementum nisi, vitae pretium leo. Aenean viverra arcu vel quam luctus egestas. Nunc rutrum pulvinar elementum. Proin neque odio, blandit quis molestie a, posuere sed elit. Sed eu quam in ligula semper volutpat. Fusce vel diam turpis. Suspendisse in sollicitudin arcu. Maecenas lobortis ligula sed leo finibus semper." },
@@ -18,7 +29,18 @@ namespace BlazorBlog.Server.Controllers
         [HttpGet]
         public ActionResult<List<Post>> GetAllPosts()
         {
-            return Ok(Posts);
+            try
+            {
+                var posts = _data.Post.GetAllPosts();
+                if (posts != null)
+                    _logger.LogInfo($"Got posts successfully");
+                return Ok(posts);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went getting all posts: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("{url}")]

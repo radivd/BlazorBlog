@@ -17,12 +17,12 @@ namespace BlazorBlog.Client.Services
 
         public Task<Post> GetPostByUrl(string url)
         {
-            return _http.GetFromJsonAsync<Post>($"api/posts/{url}");
+            return _http.GetFromJsonAsync<Post>($"api/post/{url}");
         }
 
         public Task<List<Post>> GetAllPosts()
         {
-            return _http.GetFromJsonAsync<List<Post>>("api/posts/");
+            return _http.GetFromJsonAsync<List<Post>>("api/post/");
         }
     }
 }
