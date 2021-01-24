@@ -1,6 +1,7 @@
 ﻿using System;
 using BlazorBlog.Server.Contracts;
 using BlazorBlog.Server.Data;
+using BlazorBlog.Server.Logging;
 using BlazorBlog.Server.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Pomelo.EntityFrameworkCore.MySql.Storage;
 
-namespace BudgetingServer.Extensions
+namespace BlazorBlog.Server.Extensions
 {
     public static class ServiceExtensions
     {
@@ -42,6 +43,11 @@ namespace BudgetingServer.Extensions
         public static void ConfigureDataWrapper(this IServiceCollection services)
         {
             services.AddScoped<IDataWrapper, DataWrapper>();
+        }
+
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
         }
     }
 }

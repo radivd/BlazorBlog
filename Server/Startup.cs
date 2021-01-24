@@ -1,4 +1,4 @@
-using BudgetingServer.Extensions;
+using BlazorBlog.Server.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using NLog;
+using System;
+using System.IO;
 
 namespace BlazorBlog.Server
 {
@@ -15,6 +18,7 @@ namespace BlazorBlog.Server
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -27,6 +31,7 @@ namespace BlazorBlog.Server
             services.ConfigureCors();
             services.ConfigureIISIntegration();
 
+            services.ConfigureLoggerService();
             services.ConfigureMySqlContext(Configuration);
             services.ConfigureDataWrapper();
 
