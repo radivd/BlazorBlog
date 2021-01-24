@@ -1,5 +1,5 @@
 ﻿@page "/posts/{url}"
-@inject BlazorBlog.Client.Services.IPostService PostService
+@inject Services.IPostService PostService
 
 @if (post == null)
 {
@@ -15,7 +15,7 @@ else
 }
 
 @code {
-    private BlazorBlog.Shared.Post post;
+    private BlazorBlog.Shared.Models.Post post;
 
     [Parameter]
     public string Url { get; set; }

@@ -1,4 +1,4 @@
-﻿using BlazorBlog.Server.Models;
+﻿using BlazorBlog.Shared.Models;
 
 namespace BlazorBlog.Server.Contracts
 {

@@ -1,5 +1,6 @@
 ﻿using BlazorBlog.Server.Contracts;
 using BlazorBlog.Server.Models;
+using BlazorBlog.Shared.Models;
 
 namespace BlazorBlog.Server.Data
 {

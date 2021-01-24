@@ -1,14 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-
-#nullable disable
+﻿using Microsoft.EntityFrameworkCore;
+using BlazorBlog.Shared.Models;
 
 namespace BlazorBlog.Server.Models
 {
     public class AMCDbContext : DbContext
     {
-        public AMCDbContext(DbContextOptions options) : base(options)
+        public AMCDbContext(DbContextOptions<AMCDbContext> options) : base(options)
         {
         }
 
@@ -62,7 +59,6 @@ namespace BlazorBlog.Server.Models
                 entity.ToTable("users");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_general_ci");
 

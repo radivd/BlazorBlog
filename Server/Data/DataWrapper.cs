@@ -1,10 +1,5 @@
 ﻿using BlazorBlog.Server.Contracts;
 using BlazorBlog.Server.Models;
-using BlazorBlog.Server.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlazorBlog.Server.Data
 {
