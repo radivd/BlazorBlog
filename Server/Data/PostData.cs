@@ -18,5 +18,10 @@ namespace BlazorBlog.Server.Data
                 .OrderBy(u => u.Created)
                 .ToList();
         }
+
+        public Post GetPostByUrl(string url)
+        {
+            return FindByCondition(c => c.Url == url).FirstOrDefault();
+        }
     }
 }
