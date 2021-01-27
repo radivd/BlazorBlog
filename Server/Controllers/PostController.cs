@@ -46,5 +46,84 @@ namespace BlazorBlog.Server.Controllers
 
             return Ok(post);
         }
+
+        [HttpPost]
+        public IActionResult CreateNewPost([FromBody] Post post)
+        {
+            try
+            {
+                _data.Post.Create(post);
+                _data.Save();
+
+                return Created("Post", post);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong creating post: {ex.InnerException}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdatePost([FromBody] Post post)
+        {
+            try
+            {
+                if (post == null)
+                {
+                    _logger.LogError("Post object sent from client is null.");
+                    return BadRequest("Post object from client is empty");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid post model object sent from client.");
+                    return BadRequest("Invalid post model object");
+                }
+
+                var oldPost = _data.Post.GetPostById(post.Id);
+
+                if (oldPost == null)
+                {
+                    _logger.LogError($"Post with id: {post.Id}, was not found.");
+                    return NotFound();
+                }
+
+                _data.Post.Update(post);
+                _data.Save();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong updating post: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletePost(int id)
+        {
+            try
+            {
+                var post = _data.Post.GetPostById(id);
+
+                if (post == null)
+                {
+                    _logger.LogError($"Post with id: {id}, was not found in");
+                    return NotFound();
+                }
+
+                _data.Post.Delete(post);
+                _data.Save();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside trying to delete post: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
