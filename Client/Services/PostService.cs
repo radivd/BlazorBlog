@@ -10,19 +10,13 @@ namespace BlazorBlog.Client.Services
     {
         private readonly HttpClient _http;
 
-        public PostService(HttpClient http)
-        {
-            _http = http;
-        }
+        public PostService(HttpClient http) => _http = http;
 
-        public Task<Post> GetPostByUrl(string url)
-        {
-            return _http.GetFromJsonAsync<Post>($"api/post/{url}");
-        }
+        public Task<Post> GetPostByUrl(string url) => _http.GetFromJsonAsync<Post>($"api/post/{url}");
+        public Task<List<Post>> GetAllPosts() => _http.GetFromJsonAsync<List<Post>>("api/post/");
 
-        public Task<List<Post>> GetAllPosts()
-        {
-            return _http.GetFromJsonAsync<List<Post>>("api/post/");
-        }
+        public void CreateNewPost(Post post) => _http.PostAsJsonAsync("api/post/", post);
+        public void UpdatePost(Post post) => _http.PutAsJsonAsync("api/post/", post);
+        public void DeletePost(int id) => _http.DeleteAsync($"api/post/{id}");
     }
 }

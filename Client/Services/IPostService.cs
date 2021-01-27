@@ -8,5 +8,8 @@ namespace BlazorBlog.Client.Services
     {
         Task<List<Post>> GetAllPosts();
         Task<Post> GetPostByUrl(string url);
+        void CreateNewPost(Post post);
+        void UpdatePost(Post post);
+        void DeletePost(int id);
     }
 }
