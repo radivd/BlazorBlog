@@ -7,5 +7,6 @@ namespace BlazorBlog.Server.Contracts
     {
         IEnumerable<Post> GetAllPosts();
         Post GetPostByUrl(string url);
+        Post GetPostById(int id);
     }
 }

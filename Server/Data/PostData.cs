@@ -23,5 +23,10 @@ namespace BlazorBlog.Server.Data
         {
             return FindByCondition(c => c.Url == url).FirstOrDefault();
         }
+
+        public Post GetPostById(int id)
+        {
+            return FindByCondition(c => c.Id == id).FirstOrDefault();
+        }
     }
 }
