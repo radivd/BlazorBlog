@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager
 
 <h3>Create New Post</h3>
-<EditForm Model="@newPost" OnValidSubmit="CreateNewPost">
+<EditForm Model="@newPost" OnValidSubmit="CreateNewPostAsync">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label for="url">Url</label>
