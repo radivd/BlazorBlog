@@ -2,11 +2,8 @@ using BlazorBlog.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorBlog.Client
@@ -20,6 +17,12 @@ namespace BlazorBlog.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<IPostService, PostService>();
+
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                builder.Configuration.Bind("Auth0", options.ProviderOptions);
+                options.ProviderOptions.ResponseType = "code";
+            });
 
             await builder.Build().RunAsync();
         }

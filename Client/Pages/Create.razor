@@ -1,4 +1,5 @@
 ﻿@page "/create"
+@attribute [Authorize]
 @inject Services.IPostService PostService
 @inject NavigationManager NavigationManager
 
@@ -38,8 +39,8 @@
 </EditForm>
 
 
-@code 
-{ 
+@code
+{
     private BlazorBlog.Shared.Models.Post newPost = new BlazorBlog.Shared.Models.Post();
 
     async void CreateNewPostAsync()
