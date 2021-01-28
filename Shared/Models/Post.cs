@@ -11,7 +11,7 @@ namespace BlazorBlog.Shared.Models
         public string Title { get; set; }
         public string Content { get; set; }
         public string Description { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
         public DateTime Edited { get; set; }
         public bool IsPublished { get; set; }
     }
