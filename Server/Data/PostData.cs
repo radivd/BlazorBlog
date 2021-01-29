@@ -10,23 +10,13 @@ namespace BlazorBlog.Server.Data
     {
         public PostData(AMCDbContext amcDbContext) : base(amcDbContext)
         {
+
         }
 
-        public IEnumerable<Post> GetAllPosts()
-        {
-            return FindAll()
-                .OrderBy(u => u.Created)
-                .ToList();
-        }
-
-        public Post GetPostByUrl(string url)
-        {
-            return FindByCondition(c => c.Url == url).FirstOrDefault();
-        }
-
-        public Post GetPostById(int id)
-        {
-            return FindByCondition(c => c.Id == id).FirstOrDefault();
-        }
+        public IEnumerable<Post> GetAllPosts() => FindAll().OrderBy(u => u.Created).ToList();
+        public IEnumerable<Post> GetAllPublishedPosts() => FindByCondition(c => c.IsPublished == true).ToList();
+        public Post GetPostByUrl(string url) => FindByCondition(c => c.Url == url).FirstOrDefault();
+        public Post GetPublishedPostByUrl(string url) => FindByCondition(c => c.Url == url && c.IsPublished == true).FirstOrDefault();
+        public Post GetPostById(int id) => FindByCondition(c => c.Id == id).FirstOrDefault();
     }
 }
