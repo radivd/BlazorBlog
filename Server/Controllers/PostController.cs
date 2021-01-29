@@ -1,14 +1,15 @@
 ﻿using BlazorBlog.Server.Contracts;
 using BlazorBlog.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BlazorBlog.Server.Controllers
 {
-    [Route("api/post")]
     [ApiController]
+    [Route("api/post/editor")]
+    [Authorize]
     public class PostController : ControllerBase
     {
         private IDataWrapper _data;

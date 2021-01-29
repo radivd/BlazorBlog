@@ -1,13 +1,13 @@
 ﻿using BlazorBlog.Server.Contracts;
-using BlazorBlog.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
 namespace BlazorBlog.Server.Controllers
 {
     [ApiController]
     [Route("api/user")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private IDataWrapper _data;
