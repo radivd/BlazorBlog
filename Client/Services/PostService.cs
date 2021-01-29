@@ -1,7 +1,11 @@
 ﻿using BlazorBlog.Shared.Models;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorBlog.Client.Services
@@ -9,16 +13,68 @@ namespace BlazorBlog.Client.Services
     public class PostService : IPostService
     {
         private readonly HttpClient _http;
+        private readonly IAccessTokenProvider _tokenProvider;
 
-        public PostService(HttpClient http) => _http = http;
+        public PostService(HttpClient http, IAccessTokenProvider tokenProvider)
+        {
+            _http = http;
+            _tokenProvider = tokenProvider;
+        }
 
-        public Task<Post> GetPostByUrl(string url) => _http.GetFromJsonAsync<Post>($"api/post/{url}");
-        public Task<List<Post>> GetAllPosts() => _http.GetFromJsonAsync<List<Post>>("api/post/");
+        public Task<List<Post>> GetAllPublishedPosts() => _http.GetFromJsonAsync<List<Post>>("api/post/");
+        public Task<Post> GetPublishedPostByUrl(string url) => _http.GetFromJsonAsync<Post>($"api/post/{url}");
+
+        public async Task<List<Post>> GetAllEditorPosts()
+        {
+            List<Post> posts = new List<Post>();
+            using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, "api/post/editor"))
+            {
+                var tokenResult = await _tokenProvider.RequestAccessToken();
+
+                if (tokenResult.TryGetToken(out var token))
+                {
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
+                    var response = await _http.SendAsync(requestMessage);
+                    posts = await response.Content.ReadFromJsonAsync<List<Post>>();
+                }
+            }
+            return posts;
+        }
+
+        public async Task<Post> GetEditorPostByUrl(string url)
+        {
+            Post post;
+            using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"api/post/editor/{url}"))
+            {
+                var tokenResult = await _tokenProvider.RequestAccessToken();
+
+                if (tokenResult.TryGetToken(out var token))
+                {
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
+                    var response = await _http.SendAsync(requestMessage);
+                    post = await response.Content.ReadFromJsonAsync<Post>();
+                    return post;
+                }
+            }
+            return null;
+        }
 
         public async Task<Post> CreateNewPostAsync(Post post)
         {
-            var result = await _http.PostAsJsonAsync("api/post/", post);
-            return result.Content.ReadFromJsonAsync<Post>().Result;
+            using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, "api/post/editor/"))
+            {
+                var tokenResult = await _tokenProvider.RequestAccessToken();
+
+                if (tokenResult.TryGetToken(out var token))
+                {
+                    var json = JsonConvert.SerializeObject(post);
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
+                    requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = await _http.SendAsync(requestMessage);
+                    return await response.Content.ReadFromJsonAsync<Post>();
+                }
+            }
+            return null;
         }
 
         public void UpdatePost(Post post) => _http.PutAsJsonAsync("api/post/", post);
