@@ -1,0 +1,28 @@
+﻿@page "/edit/{url}"
+@attribute [Authorize]
+@inject Services.IPostService PostService
+
+@if (post == null)
+{
+    <p>Getting post...</p>
+}
+else
+{
+    <h3>@post.Title</h3>
+
+    <div>
+        @post.Content
+    </div>
+}
+
+@code {
+    private BlazorBlog.Shared.Models.Post post;
+
+    [Parameter]
+    public string Url { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await PostService.GetPostByUrl(Url);
+    }
+}

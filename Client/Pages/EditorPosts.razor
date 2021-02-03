@@ -1,0 +1,34 @@
+﻿@page "/editor/posts"
+@inject Services.IPostService PostService
+@attribute [Authorize]
+
+@if (_posts.Count == 0)
+{
+    <p>Getting posts...</p>
+}
+else
+{
+    @foreach (BlazorBlog.Shared.Models.Post post in _posts)
+    {
+        <div style="margin: 20px;">
+            <div>
+                <h3>@post.Title</h3>
+            </div>
+            <div>
+                <h5>@post.Description</h5>
+            </div>
+            <div>
+                <a href="/editor/@post.Url">Edit Post...</a>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    private List<BlazorBlog.Shared.Models.Post> _posts = new List<BlazorBlog.Shared.Models.Post>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _posts = await PostService.GetAllPosts();
+    }
+}

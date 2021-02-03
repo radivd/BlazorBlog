@@ -24,7 +24,7 @@ namespace BlazorBlog.Client.Services
         public Task<List<Post>> GetAllPublishedPosts() => _http.GetFromJsonAsync<List<Post>>("api/post/");
         public Task<Post> GetPublishedPostByUrl(string url) => _http.GetFromJsonAsync<Post>($"api/post/{url}");
 
-        public async Task<List<Post>> GetAllEditorPosts()
+        public async Task<List<Post>> GetAllPosts()
         {
             List<Post> posts = new List<Post>();
             using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, "api/post/editor"))
@@ -41,7 +41,7 @@ namespace BlazorBlog.Client.Services
             return posts;
         }
 
-        public async Task<Post> GetEditorPostByUrl(string url)
+        public async Task<Post> GetPostByUrl(string url)
         {
             Post post;
             using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"api/post/editor/{url}"))

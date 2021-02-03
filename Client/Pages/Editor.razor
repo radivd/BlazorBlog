@@ -1,0 +1,62 @@
+﻿@page "/editor/{url}"
+@attribute [Authorize]
+@inject Services.IPostService PostService
+@inject NavigationManager NavigationManager
+
+<h3>Create New Post</h3>
+<EditForm Model="@_post" OnValidSubmit="CreateNewPostAsync">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="url">Url</label>
+        <InputText class="form-control" id="url" @bind-Value="_post.Url" />
+        <ValidationMessage For="@(() => _post.Url)" />
+    </div>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <InputText class="form-control" id="title" @bind-Value="_post.Title" />
+        <ValidationMessage For="@(() => _post.Title)" />
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <InputText class="form-control" id="description" @bind-Value="_post.Description" />
+        <ValidationMessage For="@(() => _post.Description)" />
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <InputTextArea class="form-control" id="content" @bind-Value="_post.Content" />
+        <ValidationMessage For="@(() => _post.Content)" />
+    </div>
+    <div class="form-group">
+        <label for="date">Date</label>
+        <InputDate class="form-control" id="date" @bind-Value="_post.Created" />
+    </div>
+    <div class="form-check">
+        <label for="isPublished">Published</label>
+        <InputCheckbox class="form-check-input" id="isPublished" @bind-Value="_post.IsPublished" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <ValidationSummary />
+</EditForm>
+
+
+@code
+{
+    private BlazorBlog.Shared.Models.Post _post = new BlazorBlog.Shared.Models.Post();
+    [Parameter]
+    public string? Url { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Url != "create")
+        {
+            _post = await PostService.GetPostByUrl(Url);
+        }
+    }
+
+    async void CreateNewPostAsync()
+    {
+        _post.Edited = DateTime.Now;
+        var result = await PostService.CreateNewPostAsync(_post);
+        NavigationManager.NavigateTo($"/{result.Url}");
+    }
+}
