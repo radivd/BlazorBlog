@@ -41,9 +41,16 @@
 
 @code
 {
-    private BlazorBlog.Shared.Models.Post _post = new BlazorBlog.Shared.Models.Post();
+    private BlazorBlog.Shared.Models.Post _post;
+    private string _url;
     [Parameter]
-    public string? Url { get; set; }
+    public string Url
+    {
+        get => _url;
+        set { _url = value;
+            _post = new BlazorBlog.Shared.Models.Post();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
