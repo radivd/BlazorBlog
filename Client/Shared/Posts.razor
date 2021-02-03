@@ -1,6 +1,5 @@
-﻿@using BlazorBlog.Shared
-@using BlazorBlog.Shared.Models;
-@inject BlazorBlog.Client.Services.IPostService PostService
+﻿@using BlazorBlog.Shared.Models;
+@inject Services.IPostService PostService
 
 @if (_posts.Count == 0)
 {
@@ -8,27 +7,46 @@
 }
 else
 {
-    @foreach (var post in _posts)
+    <div class="card mainpost">
+        <img src="@_posts[0].ImageUrl" class="card-img-top" alt="">
+        <div class="card-body">
+            <div>
+                <h5 class="card-title">@_posts[0].Title</h5>
+            </div>
+            <div>
+                <p class="card-text">@_posts[0].Description</p>
+            </div>
+            <div>
+                <a href="/@_posts[0].Url" class="btn btn-primary">Read More...</a>
+            </div>
+        </div>
+    </div>
+    @for (var i = 1; i < _posts.Count; i++)
     {
-        <div style="margin: 20px;">
-            <div>
-                <h3>@post.Title</h3>
-            </div>
-            <div>
-                <h5>@post.Description</h5>
-            </div>
-            <div>
-                <a href="/@post.Url">Read More...</a>
+        var post = _posts[i];
+        <div class="card">
+            <img src="@post.ImageUrl" class="card-img-top" alt="">
+            <div class="card-body">
+                <div>
+                    <h5 class="card-title">@post.Title</h5>
+                </div>
+                <div>
+                    <p class="card-text">@post.Description</p>
+                </div>
+                <div>
+                    <a href="/@post.Url" class="btn btn-primary">Read More...</a>
+                </div>
             </div>
         </div>
     }
 }
 
 @code {
-    private List<Post> _posts = new List<Post>();
+    private List<Post> _posts = new();
 
     protected override async Task OnInitializedAsync()
     {
         _posts = await PostService.GetAllPublishedPosts();
+        _posts.Reverse();
     }
 }
