@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BlazorBlog.Shared.Models
@@ -10,6 +9,7 @@ namespace BlazorBlog.Shared.Models
         public Guid UserId { get; set; }
         [Required, StringLength(22)]
         public string Url { get; set; }
+        public string ImageUrl { get; set; }
         [Required, StringLength(40)]
         public string Title { get; set; }
         [Required]

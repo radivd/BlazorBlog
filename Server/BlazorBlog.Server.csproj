@@ -25,4 +25,8 @@
     <Watch Include="..\Client\**\*.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="content\images" />
+  </ItemGroup>
+
 </Project>

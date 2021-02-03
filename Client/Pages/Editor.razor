@@ -1,4 +1,5 @@
 ﻿@page "/editor/{url}"
+@using System.Net.Http.Headers
 @attribute [Authorize]
 @inject Services.IPostService PostService
 @inject NavigationManager NavigationManager
@@ -15,6 +16,16 @@
         <label for="title">Title</label>
         <InputText class="form-control" id="title" @bind-Value="_post.Title" />
         <ValidationMessage For="@(() => _post.Title)" />
+    </div>
+    <div class="form-file">
+        <label for="image">Image</label>
+        <InputFile OnChange="OnFileChange" />
+        @if (_post.ImageUrl != null)
+        {
+            <div>
+                <img src="@_post.ImageUrl" style="width:300px" />
+            </div>
+        }
     </div>
     <div class="form-group">
         <label for="description">Description</label>
@@ -43,11 +54,14 @@
 {
     private BlazorBlog.Shared.Models.Post _post;
     private string _url;
+
     [Parameter]
     public string Url
     {
         get => _url;
-        set { _url = value;
+        set
+        {
+            _url = value;
             _post = new BlazorBlog.Shared.Models.Post();
         }
     }
@@ -60,10 +74,27 @@
         }
     }
 
-    async void CreateNewPostAsync()
+    private async void CreateNewPostAsync()
     {
         _post.Edited = DateTime.Now;
         var result = await PostService.CreateNewPostAsync(_post);
         NavigationManager.NavigateTo($"/{result.Url}");
+    }
+    
+    private async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var imageFiles = e.GetMultipleFiles();
+        foreach (var imageFile in imageFiles)
+        {
+            var resizedFile = await imageFile.RequestImageFileAsync("image/png", 300, 500);
+                    
+            using (var ms = resizedFile.OpenReadStream(resizedFile.Size))
+            {
+                var content = new MultipartFormDataContent();
+                content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+                content.Add(new StreamContent(ms, Convert.ToInt32(resizedFile.Size)), "image", imageFile.Name);
+                _post.ImageUrl = await PostService.UploadImageAsync(content);
+            }
+        }
     }
 }

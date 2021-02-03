@@ -1,5 +1,6 @@
 ﻿using BlazorBlog.Shared.Models;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BlazorBlog.Client.Services
@@ -11,6 +12,7 @@ namespace BlazorBlog.Client.Services
         Task<Post> GetPublishedPostByUrl(string url);
         Task<Post> GetPostByUrl(string url);
         Task<Post> CreateNewPostAsync(Post post);
+        Task<string> UploadImageAsync(MultipartFormDataContent content);
         void UpdatePost(Post post);
         void DeletePost(int id);
     }

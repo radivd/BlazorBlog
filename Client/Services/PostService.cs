@@ -1,7 +1,9 @@
-﻿using BlazorBlog.Shared.Models;
+﻿using System;
+using BlazorBlog.Shared.Models;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -72,6 +74,27 @@ namespace BlazorBlog.Client.Services
                     requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
                     var response = await _http.SendAsync(requestMessage);
                     return await response.Content.ReadFromJsonAsync<Post>();
+                }
+            }
+            return null;
+        }
+        
+        public async Task<string> UploadImageAsync(MultipartFormDataContent content)
+        {
+            using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/api/upload"))
+            {
+                var tokenResult = await _tokenProvider.RequestAccessToken();
+
+                if (tokenResult.TryGetToken(out var token))
+                {
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
+                    requestMessage.Content = content;
+                    var response = await _http.SendAsync(requestMessage);
+                    var result = await response.Content.ReadAsStringAsync();
+                    if (!response.IsSuccessStatusCode)
+                        throw new ApplicationException(result);
+
+                    return Path.Combine("", result);
                 }
             }
             return null;

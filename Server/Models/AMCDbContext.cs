@@ -15,7 +15,7 @@ namespace BlazorBlog.Server.Models
             {
                 entity.ToTable("posts");
 
-                entity.Property(e => e.Id).HasColumnType("int(254)");
+                entity.Property(e => e.Id).HasColumnType("int(255)");
 
                 entity.Property(e => e.Content)
                     .IsRequired()
@@ -45,10 +45,16 @@ namespace BlazorBlog.Server.Models
 
                 entity.Property(e => e.Url)
                     .IsRequired()
-                    .HasColumnType("varchar(254)")
+                    .HasColumnType("varchar(255)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_general_ci");
 
+                entity.Property(e => e.ImageUrl)
+                    .IsRequired()
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_general_ci");
+                
                 entity.Property(e => e.UserId)
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_general_ci");
