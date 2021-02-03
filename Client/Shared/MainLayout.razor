@@ -1,12 +1,18 @@
 ﻿@inherits LayoutComponentBase
 
-<header>
-    <Header />
-</header>
-
-
-<div class="main">
-    <div class="content">
-        @Body
-    </div>
+<div class="grid-box">
+    <header>
+        <Header />
+    </header>
+    
+    @Body
+    
+    <footer>
+        <h6>@FooterMessage</h6>
+    </footer>
 </div>
+
+@code {
+        private const string FooterMessage = "@2021";
+}
+

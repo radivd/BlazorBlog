@@ -1,4 +1,6 @@
-﻿* {
+﻿@import "bootstrap/bootstrap.css";
+
+* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -9,27 +11,42 @@ a {
     text-decoration: none;
 }
 
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-app {
-    min-height: 100vw;
+.grid-box {
+    min-width: 100vw;
+    min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 50px auto 30px;
+    grid-template-rows: 100px auto 100px;
     grid-template-areas: 
         "header header"
         "main main"
         "footer footer";
 }
 
+main {
+    width: 100%;
+    grid-area: main;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: auto 1100px auto;
+    grid-template-areas:
+        ". content ."
+}
+
+footer {
+    grid-area: footer;
+    justify-self: center;
+    align-self: end;
+    padding-bottom: 1rem;
+}
+
 header {
     grid-area: header;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 20px 30px;
-    grid-template-areas: "title login" "title navbar";
+    grid-template-rows: 30px 70px;
+    grid-template-areas: "title login"
+    "title navbar";
 }
 
 .pagetitle {
@@ -51,28 +68,31 @@ header {
     justify-self: end;
     margin-right: 30px;
 }
-    .navbar ul {
-    }
-    .navbar li {
-        font-size: 25px;
-        font-weight: 700;
-        display: inline-block;
-        margin-right: 10px;
-        list-style: none;
-    }
-
-.main {
-    grid-area: main;
-    display: grid;
-    grid-template-columns: auto 1100px auto;
-    grid-template-areas:
-        ". content ."
+.navbar ul {
+}
+.navbar li {
+    font-size: 25px;
+    font-weight: 700;
+    display: inline-block;
+    margin-right: 10px;
+    list-style: none;
 }
 
-.content {
+.posts {
     grid-area: content;
-    background-color: cornsilk;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
     padding: 1.1rem;
+}
+
+.posts {
+    
+    grid-column: 1 / span 2
+}
+
+.posts .mainpost {
+    grid-column: 1 / span 2;
 }
 
 .valid.modified:not([type=checkbox]) {
