@@ -36,7 +36,7 @@ header {
     grid-area: header;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 30px 70px;
+    grid-template-rows: 1fr 1fr;
     grid-template-areas: 
             "title login"
             "title navbar";
@@ -51,6 +51,7 @@ header {
 
 .login {
     grid-area: login;
+    margin-top: 5px;
     margin-right: 20px;
     align-self: end;
     justify-self: end;
@@ -60,9 +61,7 @@ header {
     grid-area: navbar;
     align-self: end;
     justify-self: end;
-    margin-right: 30px;
-}
-.navbar ul {
+    margin-right: 20px;
 }
 .navbar li {
     font-size: 25px;
