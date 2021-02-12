@@ -13,7 +13,7 @@ namespace BlazorBlog.Client.Services
         Task<Post> GetPostByUrl(string url);
         Task<Post> CreateNewPostAsync(Post post);
         Task<string> UploadImageAsync(MultipartFormDataContent content);
-        void UpdatePost(Post post);
-        void DeletePost(int id);
+        Task<Post> UpdatePostAsync(Post post);
+        Task<Post> DeletePostAsync(string url);
     }
 }

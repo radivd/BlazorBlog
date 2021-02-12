@@ -5,7 +5,7 @@
 @inject NavigationManager NavigationManager
 
 <h3>Create New Post</h3>
-<EditForm Model="@_post" OnValidSubmit="CreateNewPostAsync">
+<EditForm Model="@_post" OnValidSubmit="HandlePostAsync">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label for="url">Url</label>
@@ -45,8 +45,16 @@
         <label for="isPublished">Published</label>
         <InputCheckbox class="form-check-input" id="isPublished" @bind-Value="_post.IsPublished" />
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    @if(_edit)
+    {
+        <button type="submit" class="btn btn-warning">Update</button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-success">Create</button>
+    }
     <ValidationSummary />
+    <button class="btn btn-danger" @onclick="DeletePostAsync">Delete</button>
 </EditForm>
 
 
@@ -54,6 +62,7 @@
 {
     private BlazorBlog.Shared.Models.Post _post;
     private string _url;
+    private bool _edit;
 
     [Parameter]
     public string Url
@@ -68,17 +77,37 @@
 
     protected override async Task OnInitializedAsync()
     {
+        _edit = false;
         if (Url != "create")
         {
             _post = await PostService.GetPostByUrl(Url);
+            _edit = true;
         }
     }
 
-    private async void CreateNewPostAsync()
+    private async void HandlePostAsync()
     {
         _post.Edited = DateTime.Now;
-        var result = await PostService.CreateNewPostAsync(_post);
-        NavigationManager.NavigateTo($"/{result.Url}");
+        BlazorBlog.Shared.Models.Post result;
+        if (_edit)
+        {
+            result = await PostService.UpdatePostAsync(_post);
+            if (_post.IsPublished)
+                NavigationManager.NavigateTo($"/{result.Url}");
+            else
+                NavigationManager.NavigateTo($"/");
+        }
+        else
+        {
+            result = await PostService.CreateNewPostAsync(_post);
+            NavigationManager.NavigateTo($"/{result.Url}");
+        }
+    }
+
+    private async void DeletePostAsync()
+    {
+        await PostService.DeletePostAsync(_post.Url);
+        NavigationManager.NavigateTo("/");
     }
     
     private async Task OnFileChange(InputFileChangeEventArgs e)

@@ -82,18 +82,18 @@ namespace BlazorBlog.Server.Controllers
                     return BadRequest("Invalid post model object");
                 }
 
-                var oldPost = _data.Post.GetPostById(post.Id);
+                var oldPost = _data.Post.GetPostByUrl(post.Url);
 
                 if (oldPost == null)
                 {
-                    _logger.LogError($"Post with id: {post.Id}, was not found.");
+                    _logger.LogError($"Post with url: {post.Url}, was not found.");
                     return NotFound();
                 }
 
                 _data.Post.Update(post);
                 _data.Save();
 
-                return NoContent();
+                return Created("Post", post);
             }
             catch (Exception ex)
             {
@@ -102,23 +102,23 @@ namespace BlazorBlog.Server.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeletePost(int id)
+        [HttpDelete("{url}")]
+        public IActionResult DeletePost(string url)
         {
             try
             {
-                var post = _data.Post.GetPostById(id);
+                var post = _data.Post.GetPostByUrl(url);
 
                 if (post == null)
                 {
-                    _logger.LogError($"Post with id: {id}, was not found in");
+                    _logger.LogError($"Post with url: {url}, was not found in");
                     return NotFound();
                 }
 
                 _data.Post.Delete(post);
                 _data.Save();
 
-                return NoContent();
+                return Accepted();
             }
             catch (Exception ex)
             {

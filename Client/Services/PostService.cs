@@ -40,6 +40,7 @@ namespace BlazorBlog.Client.Services
                     posts = await response.Content.ReadFromJsonAsync<List<Post>>();
                 }
             }
+
             return posts;
         }
 
@@ -58,12 +59,16 @@ namespace BlazorBlog.Client.Services
                     return post;
                 }
             }
+
             return null;
         }
 
-        public async Task<Post> CreateNewPostAsync(Post post)
+        public Task<Post> CreateNewPostAsync(Post post) => CreateUpdateAsync(HttpMethod.Post, post);
+        public Task<Post> UpdatePostAsync(Post post) => CreateUpdateAsync(HttpMethod.Put, post);
+
+        private async Task<Post> CreateUpdateAsync(HttpMethod method, Post post)
         {
-            using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, "api/post/editor/"))
+            using (var requestMessage = new HttpRequestMessage(method, "api/post/editor/"))
             {
                 var tokenResult = await _tokenProvider.RequestAccessToken();
 
@@ -76,6 +81,24 @@ namespace BlazorBlog.Client.Services
                     return await response.Content.ReadFromJsonAsync<Post>();
                 }
             }
+
+            return null;
+        }
+        
+        public async Task<Post> DeletePostAsync(string url)
+        {
+            using (var requestMessage = new HttpRequestMessage(HttpMethod.Delete, $"api/post/editor/{url}"))
+            {
+                var tokenResult = await _tokenProvider.RequestAccessToken();
+
+                if (tokenResult.TryGetToken(out var token))
+                {
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
+                    var response = await _http.SendAsync(requestMessage);
+                    return await response.Content.ReadFromJsonAsync<Post>();
+                }
+            }
+
             return null;
         }
         
@@ -97,10 +120,8 @@ namespace BlazorBlog.Client.Services
                     return Path.Combine("", result);
                 }
             }
+
             return null;
         }
-
-        public void UpdatePost(Post post) => _http.PutAsJsonAsync("api/post/", post);
-        public void DeletePost(int id) => _http.DeleteAsync($"api/post/{id}");
     }
 }

@@ -10,15 +10,18 @@ else
 {
     @foreach (BlazorBlog.Shared.Models.Post post in _posts)
     {
-        <div style="margin: 20px;">
-            <div>
-                <h3>@post.Title</h3>
-            </div>
-            <div>
-                <h5>@post.Description</h5>
-            </div>
-            <div>
-                <a href="/editor/@post.Url">Edit Post...</a>
+        <div class="card">
+            <img src="@post.ImageUrl" class="card-img-top" alt="">
+            <div class="card-body">
+                <div>
+                    <h5 class="card-title">@post.Title</h5>
+                </div>
+                <div>
+                    <p class="card-text">@post.Description</p>
+                </div>
+                <div>
+                    <a href="/editor/@post.Url" class="btn btn-warning">Edit...</a>
+                </div>
             </div>
         </div>
     }
