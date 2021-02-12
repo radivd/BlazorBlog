@@ -1,6 +1,59 @@
-﻿@page "/"
+﻿@using BlazorBlog.Shared.Models;
+@inject Services.IPostService PostService
+@page "/"
+
+
+@if (_posts.Count == 0)
+{
+    <p>Getting posts...</p>
+}
+else
+{
     <main>
         <div class="posts">
-            <Posts/>
+            <div class="card mainpost">
+                <img src="@_posts[0].ImageUrl" class="card-img-top" alt="">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title">@_posts[0].Title</h5>
+                    </div>
+                    <div>
+                        <p class="card-text">@_posts[0].Description</p>
+                    </div>
+                    <div>
+                        <a href="/@_posts[0].Url" class="btn btn-primary">Read More...</a>
+                    </div>
+                </div>
+            </div>
+            @for (var i = 1; i < _posts.Count; i++)
+            {
+                var post = _posts[i];
+                <div class="card">
+                    <img src="@post.ImageUrl" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title">@post.Title</h5>
+                        </div>
+                        <div>
+                            <p class="card-text">@post.Description</p>
+                        </div>
+                        <div>
+                            <a href="/@post.Url" class="btn btn-primary">Read More...</a>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </main>
+}
+
+
+@code {
+    private List<Post> _posts = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _posts = await PostService.GetAllPublishedPosts();
+        _posts.Reverse();
+    }
+}
