@@ -1,0 +1,119 @@
+﻿.grid-box {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100px auto 100px;
+    grid-template-areas: 
+        "header header"
+        "main main"
+        "footer footer";
+}
+
+.card {
+    max-width: 1000px;
+    width: 100%;
+}
+
+main {
+    width: 100%;
+    grid-area: main;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: minmax(20px, 0) minmax(700px, 1000px) minmax(20px, 0);
+    grid-template-areas:
+        ". content ."
+}
+
+footer {
+    grid-area: footer;
+    justify-self: center;
+    align-self: end;
+    padding-bottom: 1rem;
+}
+
+header {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 30px 70px;
+    grid-template-areas: 
+            "title login"
+            "title navbar";
+}
+
+.pagetitle {
+    grid-area: title;
+    font-weight: 900;
+    align-self: center;
+    justify-self: center;
+}
+
+.login {
+    grid-area: login;
+    margin-right: 20px;
+    align-self: end;
+    justify-self: end;
+}
+
+.navbar {
+    grid-area: navbar;
+    align-self: end;
+    justify-self: end;
+    margin-right: 30px;
+}
+.navbar ul {
+}
+.navbar li {
+    font-size: 25px;
+    font-weight: 700;
+    margin-right: 10px;
+    list-style: none;
+}
+
+.posts {
+    grid-area: content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+}
+
+.posts .mainpost {
+    grid-column: 1 / span 2;
+}
+
+@media (max-width: 767.98px) {
+    .grid-box {
+        grid-template-columns: 100%;
+        grid-template-rows: 145px auto 100px;
+        grid-template-areas: 
+        "header"
+        "main"
+        "footer";
+    }
+
+    main {
+        grid-template-columns: 95%;
+        grid-template-areas:
+        "content"
+    }
+
+    header {
+        grid-template-columns: 100%;
+        grid-template-rows: 25px 70px 60px;
+        grid-template-areas:
+                "login"
+                "title"
+                "navbar"
+    }
+    
+    .navbar {
+        align-self: center;
+        justify-self: center;
+        margin-right: 0;
+    }
+    
+    .posts .card {
+        grid-column: 1 / span 2;
+    }
+}

@@ -1,4 +1,5 @@
 ﻿@import "bootstrap/bootstrap.css";
+@import "layout.css";
 
 * {
     box-sizing: border-box;
@@ -9,90 +10,6 @@
 a {
     color: #34495e;
     text-decoration: none;
-}
-
-.grid-box {
-    min-width: 100vw;
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 100px auto 100px;
-    grid-template-areas: 
-        "header header"
-        "main main"
-        "footer footer";
-}
-
-main {
-    width: 100%;
-    grid-area: main;
-    display: grid;
-    justify-content: center;
-    grid-template-columns: auto 1100px auto;
-    grid-template-areas:
-        ". content ."
-}
-
-footer {
-    grid-area: footer;
-    justify-self: center;
-    align-self: end;
-    padding-bottom: 1rem;
-}
-
-header {
-    grid-area: header;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 30px 70px;
-    grid-template-areas: "title login"
-    "title navbar";
-}
-
-.pagetitle {
-    grid-area: title;
-    font-weight: 900;
-    align-self: center;
-    justify-self: center;
-}
-
-.login {
-    grid-area: login;
-    align-self: end;
-    justify-self: end;
-}
-
-.navbar {
-    grid-area: navbar;
-    align-self: end;
-    justify-self: end;
-    margin-right: 30px;
-}
-.navbar ul {
-}
-.navbar li {
-    font-size: 25px;
-    font-weight: 700;
-    display: inline-block;
-    margin-right: 10px;
-    list-style: none;
-}
-
-.posts {
-    grid-area: content;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
-    padding: 1.1rem;
-}
-
-.posts {
-    
-    grid-column: 1 / span 2
-}
-
-.posts .mainpost {
-    grid-column: 1 / span 2;
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -124,12 +41,4 @@ header {
     position: absolute;
     right: 0.75rem;
     top: 0.5rem;
-}
-
-@media (max-width: 767.98px) {
-
-}
-
-@media (min-width: 768px) {
-
 }
