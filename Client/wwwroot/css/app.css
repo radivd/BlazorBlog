@@ -12,6 +12,27 @@ a {
     text-decoration: none;
 }
 
+.loading {
+    position: absolute;
+    border: 5px solid #bacbe6;
+    border-top: 5px solid #86b7fe;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 800ms linear infinite;
+    top: 40%;
+    left: 45%;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }

@@ -2,15 +2,15 @@
 @inject Services.IPostService PostService
 @page "/"
 
-
-@if (_posts.Count == 0)
-{
-    <p>Getting posts...</p>
-}
-else
-{
-    <main>
-        <div class="posts">
+<main>
+    <div class="posts">
+        @if (_posts.Count == 0)
+        {
+            <div class="loading"></div>
+            <p>Getting posts...</p>
+        }
+        else
+        {
             <div class="card mainpost">
                 <img src="@_posts[0].ImageUrl" class="card-img-top" alt="">
                 <div class="card-body">
@@ -43,9 +43,9 @@ else
                     </div>
                 </div>
             }
-        </div>
-    </main>
-}
+        }
+    </div>
+</main>
 
 
 @code {
