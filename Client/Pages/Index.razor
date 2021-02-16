@@ -3,7 +3,7 @@
 @page "/"
 
 <main>
-    <div class="posts">
+    <div class="cards">
         @if (_posts.Count == 0)
         {
             <div class="loading"></div>
@@ -11,36 +11,39 @@
         }
         else
         {
-            <div class="card mainpost">
-                <img src="@_posts[0].ImageUrl" class="card-img-top" alt="">
-                <div class="card-body">
-                    <div>
-                        <h5 class="card-title">@_posts[0].Title</h5>
-                    </div>
-                    <div>
-                        <p class="card-text">@_posts[0].Description</p>
-                    </div>
-                    <div>
-                        <a href="/@_posts[0].Url" class="btn btn-primary">Read More...</a>
-                    </div>
+            <div class="card main-image">
+                <a href="#">
+                    <img src="content/images/pexels-hasan-albari-1229861.jpg" alt=""/>
+                </a>
+            </div>
+            <div class="card about">
+                <div class="card-header">
+                    <h3>About</h3>
+                </div>
+                <div class="card-content">
+                    <p>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</p>
                 </div>
             </div>
-            @for (var i = 1; i < _posts.Count; i++)
+            <div class="card headshot">
+                <div class="card-image">
+                    <img src="content/images/pexels-mohamed-abdelghaffar-771742.jpg" alt=""/>
+                </div>
+            </div>
+            @for (var i = 0; i < _posts.Count; i++)
             {
                 var post = _posts[i];
-                <div class="card">
-                    <img src="@post.ImageUrl" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <div>
+                <div class="card post">
+                    <a href="@post.Url">
+                        <div class="card-image">
+                            <img src="@post.ImageUrl" class="card-img-top" alt="">
+                        </div>
+                        <div class="card-header">
                             <h5 class="card-title">@post.Title</h5>
                         </div>
-                        <div>
+                        <div class="card-content">
                             <p class="card-text">@post.Description</p>
                         </div>
-                        <div>
-                            <a href="/@post.Url" class="btn btn-primary">Read More...</a>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             }
         }
