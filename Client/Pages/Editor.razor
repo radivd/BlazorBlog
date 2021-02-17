@@ -1,9 +1,11 @@
 ﻿@page "/editor/{url}"
 @using System.Net.Http.Headers
+@using System.Net.Mime
 @attribute [Authorize]
 @inject Services.IPostService PostService
 @inject NavigationManager NavigationManager
 
+<div class="editor">
 <h3>Create New Post</h3>
 <EditForm Model="@_post" OnValidSubmit="HandlePostAsync">
     <DataAnnotationsValidator />
@@ -18,12 +20,12 @@
         <ValidationMessage For="@(() => _post.Title)" />
     </div>
     <div class="form-file">
-        <label for="image">Image</label>
+        <label>Image</label>
         <InputFile OnChange="OnFileChange" />
         @if (_post.ImageUrl != null)
         {
             <div>
-                <img src="@_post.ImageUrl" style="width:300px" />
+                <img src="@_post.ImageUrl" style="width:300px" alt="" />
             </div>
         }
     </div>
@@ -56,7 +58,7 @@
     <ValidationSummary />
     <button class="btn btn-danger" @onclick="DeletePostAsync">Delete</button>
 </EditForm>
-
+</div>
 
 @code
 {
@@ -112,18 +114,15 @@
     
     private async Task OnFileChange(InputFileChangeEventArgs e)
     {
-        var imageFiles = e.GetMultipleFiles();
-        foreach (var imageFile in imageFiles)
+        var imageFile = e.File;
+        var resizedFile = await imageFile.RequestImageFileAsync("image/png", 300, 500);
+                
+        using (var ms = resizedFile.OpenReadStream(resizedFile.Size))
         {
-            var resizedFile = await imageFile.RequestImageFileAsync("image/png", 300, 500);
-                    
-            using (var ms = resizedFile.OpenReadStream(resizedFile.Size))
-            {
-                var content = new MultipartFormDataContent();
-                content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
-                content.Add(new StreamContent(ms, Convert.ToInt32(resizedFile.Size)), "image", imageFile.Name);
-                _post.ImageUrl = await PostService.UploadImageAsync(content);
-            }
+            var content = new MultipartFormDataContent();
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            content.Add(new StreamContent(ms, Convert.ToInt32(resizedFile.Size)), "image", imageFile.Name);
+            _post.ImageUrl = await PostService.UploadImageAsync(content);
         }
     }
 }

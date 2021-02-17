@@ -2,54 +2,51 @@
 @inject Services.IPostService PostService
 @page "/"
 
-<main>
-    <div class="cards">
-        @if (_posts.Count == 0)
+<div class="cards">
+    @if (_posts.Count == 0)
+    {
+        <div class="loading"></div>
+        <p>Getting posts...</p>
+    }
+    else
+    {
+        <div class="card main-image">
+            <a href="#">
+                <img src="content/images/pexels-hasan-albari-1229861.jpg" alt=""/>
+            </a>
+        </div>
+        <div class="card about">
+            <div class="card-header">
+                <h3>About</h3>
+            </div>
+            <div class="card-content">
+                <p>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</p>
+            </div>
+        </div>
+        <div class="card headshot">
+            <div class="card-image">
+                <img src="content/images/pexels-mohamed-abdelghaffar-771742.jpg" alt=""/>
+            </div>
+        </div>
+        @for (var i = 0; i < _posts.Count; i++)
         {
-            <div class="loading"></div>
-            <p>Getting posts...</p>
-        }
-        else
-        {
-            <div class="card main-image">
-                <a href="#">
-                    <img src="content/images/pexels-hasan-albari-1229861.jpg" alt=""/>
+            var post = _posts[i];
+            <div class="card post">
+                <a href="@post.Url">
+                    <div class="card-image">
+                        <img src="@post.ImageUrl" class="card-img-top" alt="">
+                    </div>
+                    <div class="card-header">
+                        <h5 class="card-title">@post.Title</h5>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-text">@post.Description</p>
+                    </div>
                 </a>
             </div>
-            <div class="card about">
-                <div class="card-header">
-                    <h3>About</h3>
-                </div>
-                <div class="card-content">
-                    <p>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</p>
-                </div>
-            </div>
-            <div class="card headshot">
-                <div class="card-image">
-                    <img src="content/images/pexels-mohamed-abdelghaffar-771742.jpg" alt=""/>
-                </div>
-            </div>
-            @for (var i = 0; i < _posts.Count; i++)
-            {
-                var post = _posts[i];
-                <div class="card post">
-                    <a href="@post.Url">
-                        <div class="card-image">
-                            <img src="@post.ImageUrl" class="card-img-top" alt="">
-                        </div>
-                        <div class="card-header">
-                            <h5 class="card-title">@post.Title</h5>
-                        </div>
-                        <div class="card-content">
-                            <p class="card-text">@post.Description</p>
-                        </div>
-                    </a>
-                </div>
-            }
         }
-    </div>
-</main>
-
+    }
+</div>
 
 @code {
     private List<Post> _posts = new();
