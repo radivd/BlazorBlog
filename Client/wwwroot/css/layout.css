@@ -37,9 +37,16 @@ footer {
     margin-top: 0.625rem;
 }
 
+@media (max-width: 870px) {
+    header {
+        max-width: 610px;
+    }
+}
+
 @media (max-width: 650px) {
     .grid-box {
         grid-template-columns: minmax(2px, 0) auto minmax(2px, 0);
+        grid-template-rows: 100px auto 35px;
     }
     
     header {
@@ -49,8 +56,5 @@ footer {
                 "login"
                 "title"
                 "navbar"
-    }
-    
-    .navbar {
     }
 }

@@ -5,14 +5,21 @@
     align-self: center;
 }
 
+@media (max-width: 650px) {
+    .pagetitle {
+        justify-self: left;
+        align-self: start;
+    }
+}
+
 .login {
+    background-color: #26b050;
     grid-area: login;
     margin-top: 5px;
     margin-right: 20px;
     align-self: end;
     justify-self: end;
 }
-
 .navbar {
     grid-area: navbar;
     margin-right: 20px;
