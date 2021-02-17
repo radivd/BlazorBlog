@@ -82,11 +82,11 @@ namespace BlazorBlog.Server.Controllers
                     return BadRequest("Invalid post model object");
                 }
 
-                var oldPost = _data.Post.GetPostByUrl(post.Url);
+                var oldPost = _data.Post.GetPostById(post.Id);
 
                 if (oldPost == null)
                 {
-                    _logger.LogError($"Post with url: {post.Url}, was not found.");
+                    _logger.LogError($"Post with id: {post.Id}, was not found.");
                     return NotFound();
                 }
 
