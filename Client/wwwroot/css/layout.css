@@ -6,7 +6,7 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: minmax(20px, 0) auto minmax(20px, 0);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: 100px auto 100px;
     grid-template-areas: 
         ". header ."
         ". main ."
@@ -18,11 +18,12 @@ main {
     grid-area: main;
 }
 header {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     background-color: #7996F2;
     grid-area: header;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px 50px;
     grid-template-areas: 
             "title login"
             "title navbar";
@@ -36,7 +37,11 @@ footer {
     margin-top: 0.625rem;
 }
 
-@media (max-width: 790px) {
+@media (max-width: 650px) {
+    .grid-box {
+        grid-template-columns: minmax(2px, 0) auto minmax(2px, 0);
+    }
+    
     header {
         grid-template-columns: 1fr;
         grid-template-rows: 20px 45px 35px;
