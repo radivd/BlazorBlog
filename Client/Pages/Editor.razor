@@ -1,63 +1,88 @@
 ﻿@page "/editor/{url}"
 @using System.Net.Http.Headers
-@using System.Net.Mime
 @attribute [Authorize]
 @inject Services.IPostService PostService
 @inject NavigationManager NavigationManager
 
 <div class="editor">
-<h3>Create New Post</h3>
-<EditForm Model="@_post" OnValidSubmit="HandlePostAsync">
-    <DataAnnotationsValidator />
-    <div class="form-group">
-        <label for="url">Url</label>
-        <InputText class="form-control" id="url" @bind-Value="_post.Url" />
-        <ValidationMessage For="@(() => _post.Url)" />
-    </div>
-    <div class="form-group">
-        <label for="title">Title</label>
-        <InputText class="form-control" id="title" @bind-Value="_post.Title" />
-        <ValidationMessage For="@(() => _post.Title)" />
-    </div>
-    <div class="form-file">
-        <label>Image</label>
-        <InputFile OnChange="OnFileChange" />
-        @if (_post.ImageUrl != null)
+    <div class="heading">
+        @if (_edit)
         {
-            <div>
-                <img src="@_post.ImageUrl" style="width:300px" alt="" />
-            </div>
+            <h1>Edit Post</h1>
+        }
+        else
+        {
+            <h1>Create New Post</h1>
         }
     </div>
-    <div class="form-group">
-        <label for="description">Description</label>
-        <InputText class="form-control" id="description" @bind-Value="_post.Description" />
-        <ValidationMessage For="@(() => _post.Description)" />
-    </div>
-    <div class="form-group">
-        <label for="content">Content</label>
-        <InputTextArea class="form-control" id="content" @bind-Value="_post.Content" />
-        <ValidationMessage For="@(() => _post.Content)" />
-    </div>
-    <div class="form-group">
-        <label for="date">Date</label>
-        <InputDate class="form-control" id="date" @bind-Value="_post.Created" />
-    </div>
-    <div class="form-check">
-        <label for="isPublished">Published</label>
-        <InputCheckbox class="form-check-input" id="isPublished" @bind-Value="_post.IsPublished" />
-    </div>
-    @if(_edit)
-    {
-        <button type="submit" class="btn btn-warning">Update</button>
-    }
-    else
-    {
-        <button type="submit" class="btn btn-success">Create</button>
-    }
-    <ValidationSummary />
-    <button class="btn btn-danger" @onclick="DeletePostAsync">Delete</button>
-</EditForm>
+    <EditForm Model="@_post" OnValidSubmit="HandlePostAsync">
+        <DataAnnotationsValidator/>
+        <div class="form-group">
+            <div class="form-main">
+                <div>
+                    <label for="url">Url</label>
+                    <RadzenTextBox id="url" @bind-Value="_post.Url"/>
+                    <ValidationMessage For="@(() => _post.Url)"/>
+                </div>
+                <div>
+                    <label for="title">Title</label>
+                    <RadzenTextBox id="title" @bind-Value="_post.Title"/>
+                    <ValidationMessage For="@(() => _post.Title)"/>
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <RadzenTextBox id="description" @bind-Value="_post.Description"/>
+                    <ValidationMessage For="@(() => _post.Description)"/>
+                </div>
+                <div>
+                    <label for="date">Date</label>
+                    <RadzenDatePicker id="date" @bind-Value="_post.Created"/>
+                </div>
+                <div>
+                    <label for="isPublished">Published</label>
+                    <RadzenCheckBox id="isPublished" @bind-Value="_post.IsPublished"/>
+                </div>
+                <div class="form-action">
+                    @if (_edit)
+                    {
+                        <RadzenButton ButtonType="ButtonType.Submit" Style="background-color: #F0CC1D">Update</RadzenButton>
+                    }
+                    else
+                    {
+                        <RadzenButton ButtonType="ButtonType.Submit" Style="background-color: #26b050">Create</RadzenButton>
+                    }
+                    <RadzenButton Style="background-color: #F0681D" Click="DeletePostAsync">Delete</RadzenButton>
+                </div>
+            </div>
+            <div class="form-image">
+                <label>Image</label>
+                <InputFile OnChange="OnFileChange"/>
+                @if (_post.ImageUrl != null)
+                {
+                    <div>
+                        <img src="@_post.ImageUrl" style="width:300px" alt=""/>
+                    </div>
+                }
+            </div>
+            <div class="form-content">
+                <RadzenHtmlEditor @bind-Value=_post.Content style="height: 500px; margin-top: 1rem;" UploadUrl="upload/image">
+                    <RadzenHtmlEditorUndo/>
+                    <RadzenHtmlEditorRedo/>
+                    <RadzenHtmlEditorSeparator/>
+                    <RadzenHtmlEditorBold/>
+                    <RadzenHtmlEditorItalic/>
+                    <RadzenHtmlEditorUnderline/>
+                    <RadzenHtmlEditorStrikeThrough/>
+                    <RadzenHtmlEditorSeparator/>
+                    <RadzenHtmlEditorColor/>
+                    <RadzenHtmlEditorBackground/>
+                    <RadzenHtmlEditorRemoveFormat/>
+                </RadzenHtmlEditor>
+                <ValidationMessage For="@(() => _post.Content)"/>
+            </div>
+        </div>
+        <ValidationSummary/>
+    </EditForm>
 </div>
 
 @code
@@ -77,7 +102,7 @@
         }
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         _edit = false;
         if (Url != "create")

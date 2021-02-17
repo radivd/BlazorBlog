@@ -1,3 +1,36 @@
-﻿.editor {
+﻿.editor .heading {
+    text-align: center;
+}
+
+.form-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-gap: 5px;
+    justify-items: start;
     text-align: left;
 }
+
+.form-main {
+    grid-area: 1 / 1;
+}
+
+.form-image {
+    grid-area: 1 / 2;
+}
+
+.form-content {
+    grid-area: 2 / span 2;
+}
+
+.form-action {
+    margin-top: 10px;
+}
+
+label {
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin-top: 10px;
+}
+
