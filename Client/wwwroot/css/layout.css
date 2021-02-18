@@ -5,7 +5,7 @@
     min-width: 100vw;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: minmax(20px, 0) auto minmax(20px, 0);
+    grid-template-columns: minmax(20px, 0) 815px minmax(20px, 0);
     grid-template-rows: 75px auto 35px;
     grid-template-areas: 
         ". header ."
@@ -38,14 +38,14 @@ footer {
 }
 
 @media (max-width: 870px) {
-    header {
-        max-width: 610px;
+    .grid-box {
+        grid-template-columns: minmax(2px, 0) 610px minmax(2px, 0);
     }
 }
 
 @media (max-width: 650px) {
     .grid-box {
-        grid-template-columns: minmax(2px, 0) auto minmax(2px, 0);
+        grid-template-columns: minmax(2px, 0) 405px minmax(2px, 0);
         grid-template-rows: 100px auto 35px;
     }
     
