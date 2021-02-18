@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="content\images" />
+    <Content Include="content\images\**" CopyToPublishDirectory="PreserveNewest"/>
   </ItemGroup>
 
 </Project>
