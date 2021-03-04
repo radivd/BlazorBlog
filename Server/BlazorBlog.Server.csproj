@@ -12,7 +12,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
   </ItemGroup>
 
@@ -27,7 +26,7 @@
 
   <ItemGroup>
     <Folder Include="content\images" />
-    <Content Include="content\images\**" CopyToPublishDirectory="PreserveNewest"/>
+    <Content Include="content\images\**" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

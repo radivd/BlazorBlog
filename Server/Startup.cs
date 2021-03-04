@@ -41,7 +41,6 @@ namespace BlazorBlog.Server
             services.ConfigureCors();
             services.ConfigureIISIntegration();
 
-            services.ConfigureLoggerService();
             services.ConfigureMySqlContext(Configuration);
             services.ConfigureDataWrapper();
 

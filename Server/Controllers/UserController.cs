@@ -10,13 +10,11 @@ namespace BlazorBlog.Server.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
-        private IDataWrapper _data;
-        private ILoggerManager _logger;
+        private readonly IDataWrapper _data;
 
-        public UserController(IDataWrapper dataWrapper, ILoggerManager logger)
+        public UserController(IDataWrapper dataWrapper)
         {
             _data = dataWrapper;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -25,13 +23,10 @@ namespace BlazorBlog.Server.Controllers
             try
             {
                 var users = _data.User.GetAllUsers();
-                if (users != null)
-                    _logger.LogInfo($"Got users successfully");
                 return Ok(users);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went getting all users: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

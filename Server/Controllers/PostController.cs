@@ -12,13 +12,11 @@ namespace BlazorBlog.Server.Controllers
     [Authorize]
     public class PostController : ControllerBase
     {
-        private IDataWrapper _data;
-        private ILoggerManager _logger;
+        private readonly IDataWrapper _data;
 
-        public PostController(IDataWrapper dataWrapper, ILoggerManager logger)
+        public PostController(IDataWrapper dataWrapper)
         {
             _data = dataWrapper;
-            _logger = logger;
         }
         
         [HttpGet]
@@ -27,13 +25,10 @@ namespace BlazorBlog.Server.Controllers
             try
             {
                 var posts = _data.Post.GetAllPosts();
-                if (posts != null)
-                    _logger.LogInfo($"Got posts successfully");
                 return Ok(posts);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went getting all posts: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -60,7 +55,6 @@ namespace BlazorBlog.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong creating post: {ex.InnerException}");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -72,13 +66,11 @@ namespace BlazorBlog.Server.Controllers
             {
                 if (post == null)
                 {
-                    _logger.LogError("Post object sent from client is null.");
                     return BadRequest("Post object from client is empty");
                 }
 
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogError("Invalid post model object sent from client.");
                     return BadRequest("Invalid post model object");
                 }
 
@@ -86,7 +78,6 @@ namespace BlazorBlog.Server.Controllers
 
                 if (oldPost == null)
                 {
-                    _logger.LogError($"Post with id: {post.Id}, was not found.");
                     return NotFound();
                 }
 
@@ -97,7 +88,6 @@ namespace BlazorBlog.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong updating post: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -111,7 +101,6 @@ namespace BlazorBlog.Server.Controllers
 
                 if (post == null)
                 {
-                    _logger.LogError($"Post with url: {url}, was not found in");
                     return NotFound();
                 }
 
@@ -122,7 +111,6 @@ namespace BlazorBlog.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside trying to delete post: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

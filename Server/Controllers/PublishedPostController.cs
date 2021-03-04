@@ -1,6 +1,5 @@
 ﻿using BlazorBlog.Server.Contracts;
 using BlazorBlog.Shared.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,13 +10,11 @@ namespace BlazorBlog.Server.Controllers
     [Route("api/post")]
     public class PublishedPostController : ControllerBase
     {
-        private IDataWrapper _data;
-        private ILoggerManager _logger;
+        private readonly IDataWrapper _data;
 
         public PublishedPostController(IDataWrapper dataWrapper, ILoggerManager logger)
         {
             _data = dataWrapper;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -26,13 +23,10 @@ namespace BlazorBlog.Server.Controllers
             try
             {
                 var posts = _data.Post.GetAllPublishedPosts();
-                if (posts != null)
-                    _logger.LogInfo($"Got posts successfully");
                 return Ok(posts);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went getting public posts: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
