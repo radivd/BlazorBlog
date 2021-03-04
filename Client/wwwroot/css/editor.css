@@ -6,7 +6,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
-    grid-gap: 5px;
+    grid-gap: 0.313rem;
     justify-items: start;
     text-align: left;
 }
@@ -24,13 +24,13 @@
 }
 
 .form-action {
-    margin-top: 10px;
+    margin-top: 0.625rem;
 }
 
 label {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     display: block;
-    margin-top: 10px;
+    margin-top: 0.625rem;
 }
 

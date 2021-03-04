@@ -5,7 +5,7 @@
     align-self: center;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 40.625rem) {
     .pagetitle {
         justify-self: left;
         align-self: start;
@@ -14,21 +14,21 @@
 
 .login {
     grid-area: login;
-    margin-top: 5px;
-    margin-right: 20px;
+    margin-top: 0.313rem;
+    margin-right: 1.25rem;
     align-self: end;
     justify-self: end;
 }
 .navbar {
     grid-area: navbar;
-    margin-right: 20px;
+    margin-right: 1.25rem;
     display: flex;
     align-self: end;
     justify-self: end;
 }
 .navbar li {
-    font-size: 25px;
+    font-size: 1.563rem;
     font-weight: 700;
     list-style: none;
-    padding: 5px;
+    padding: 0.313rem;
 }

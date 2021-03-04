@@ -1,8 +1,8 @@
 ﻿.cards {
     display: grid;
-    grid-template-columns: repeat(4, 200px);
-    grid-auto-rows: 280px;
-    grid-gap: 5px;
+    grid-template-columns: repeat(4, auto);
+    grid-auto-rows: auto;
+    grid-gap: 0.313rem;
 }
 
 .card {
@@ -11,37 +11,42 @@
 }
 
 .card-header {
+    font-size: 0.75rem;
     text-transform: uppercase;
     align-self: end;
+    padding: 0.625rem;
 }
 
 .card-image {
 }
 .card-image img {
-    max-width: 200px;
+    max-width: 12.5rem;
 }
 
 .main-image img {
-    max-width: 405px;
+    max-width: 25.313rem;
 }
 
 .main-image {
     grid-area: 1 / span 2;
+    align-content: center;
 }
 
 .headshot {
     grid-area: 1 / 4;
-    overflow: hidden;
-    margin: 0 auto;
 }
 
 .about {
     grid-area: 1 / 3;
 }
 
-@media (max-width: 870px) {
+.card-content {
+    padding: 0.625rem;
+}
+
+@media (max-width: 54.375rem) {
     .cards {
-        grid-template-columns: repeat(3, 200px);
+        grid-template-columns: repeat(3, 12.5rem);
     }
 
     .headshot {
@@ -53,11 +58,21 @@
     }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 40.625rem) {
     .cards {
-        grid-template-columns: repeat(2, 200px);
+        grid-template-columns: repeat(2, 11.5rem);
+        grid-gap: 3px;
     }
-
+    
+    .main-image img {
+        max-width: 23.188rem;
+        height: 100%;
+    }
+    
+    .card-image img {
+        max-width: 11.5rem;
+    }
+    
     .headshot {
         grid-area: 2 / 2;
     }
@@ -68,5 +83,20 @@
 
     .posts .card {
         grid-column: 1 / span 2;
+    }
+}
+
+@media (max-width: 22.5rem) {
+    .cards {
+        grid-template-columns: repeat(2, 11.063rem);
+        grid-gap: 0.125rem;
+    }
+
+    .main-image img {
+        max-width: 22.25rem;
+    }
+
+    .card-image img {
+        max-width: 11.063rem;
     }
 }

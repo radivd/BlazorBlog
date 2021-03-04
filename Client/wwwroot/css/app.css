@@ -7,7 +7,7 @@
 body {
     font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 1.5;
-    font-size: 14px;
+    font-size: 0.875rem;
     color: #32475C;
     text-align: center;
 }
@@ -22,8 +22,8 @@ a {
     border: 5px solid #bacbe6;
     border-top: 5px solid #86b7fe;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 3.75rem;
+    height: 3.75rem;
     animation: spin 800ms linear infinite;
     top: 40%;
     left: 45%;

@@ -5,8 +5,8 @@
     min-width: 100vw;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: minmax(20px, 0) 815px minmax(20px, 0);
-    grid-template-rows: 75px auto 35px;
+    grid-template-columns: minmax(1.25rem, 0) 50.938rem minmax(1.25rem, 0);
+    grid-template-rows: 4.688rem auto 2.188rem;
     grid-template-areas: 
         ". header ."
         ". main ."
@@ -18,12 +18,12 @@ main {
     grid-area: main;
 }
 header {
-    margin-bottom: 5px;
+    margin-bottom: 0.313rem;
     background-color: #7996F2;
     grid-area: header;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 25px 50px;
+    grid-template-rows: 1.563rem 3.125rem;
     grid-template-areas: 
             "title login"
             "title navbar";
@@ -37,24 +37,30 @@ footer {
     margin-top: 0.625rem;
 }
 
-@media (max-width: 870px) {
+@media (max-width: 54.375rem) {
     .grid-box {
-        grid-template-columns: minmax(2px, 0) 610px minmax(2px, 0);
+        grid-template-columns: minmax(0.125rem, 0) 610px minmax(0.125rem, 0);
     }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 40.625rem) {
     .grid-box {
-        grid-template-columns: minmax(2px, 0) 405px minmax(2px, 0);
-        grid-template-rows: 100px auto 35px;
+        grid-template-columns: minmax(0.125rem, 0) 23.188rem minmax(0.125rem, 0);
+        grid-template-rows: 6.25rem auto 2.188rem;
     }
     
     header {
         grid-template-columns: 1fr;
-        grid-template-rows: 20px 45px 35px;
+        grid-template-rows: 1.25rem 2.813rem 2.188rem;
         grid-template-areas:
                 "login"
                 "title"
                 "navbar"
+    }
+}
+
+@media (max-width: 22.5rem) {
+    .grid-box {
+        grid-template-columns: minmax(0.125rem, 0) 22.25rem minmax(0.125rem, 0);
     }
 }
