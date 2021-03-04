@@ -12,7 +12,7 @@ namespace BlazorBlog.Server.Controllers
     {
         private readonly IDataWrapper _data;
 
-        public PublishedPostController(IDataWrapper dataWrapper, ILoggerManager logger)
+        public PublishedPostController(IDataWrapper dataWrapper)
         {
             _data = dataWrapper;
         }
