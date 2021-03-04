@@ -25,7 +25,7 @@ namespace BlazorBlog.Server.Controllers
                 var users = _data.User.GetAllUsers();
                 return Ok(users);
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500, "Internal server error");
             }

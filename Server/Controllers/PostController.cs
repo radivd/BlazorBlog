@@ -27,7 +27,7 @@ namespace BlazorBlog.Server.Controllers
                 var posts = _data.Post.GetAllPosts();
                 return Ok(posts);
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -53,7 +53,7 @@ namespace BlazorBlog.Server.Controllers
 
                 return Created("Post", post);
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -86,7 +86,7 @@ namespace BlazorBlog.Server.Controllers
 
                 return Created("Post", post);
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -109,7 +109,7 @@ namespace BlazorBlog.Server.Controllers
 
                 return Accepted();
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500, "Internal server error");
             }
